@@ -111,7 +111,7 @@ def commandes_show():
 def statut_variables():
     variables = {}
     variables['config'] = {'debug': app.debug}
-    variables['liste_commandes'] = ListeCommandes.liste
+    variables['liste'] = dict(ListeCommandes.liste)
     variables['dependencies'] = dependencies
     return render_template('status.html', variables=variables)
 
