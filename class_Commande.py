@@ -36,66 +36,66 @@ patern_processus = {
 class Commande:
 
     def __init__(self, UniqueID, DateCreation, DateFin, NomDentiste, NumBoite, Processus, Priorite, Etapes):
-        self.UniqueID = UniqueID
-        self.DateCreation = DateCreation
-        self.DateFin = DateFin
-        self.NomDentiste = NomDentiste
-        self.NumBoite = NumBoite
-        self.Processus = Processus
-        self.Priorite = Priorite
-        self.Etapes = Etapes
+        self._UniqueID = UniqueID
+        self._DateCreation = DateCreation
+        self._DateFin = DateFin
+        self._NomDentiste = NomDentiste
+        self._NumBoite = NumBoite
+        self._Processus = Processus
+        self._Priorite = Priorite
+        self._Etapes = Etapes
 
     def __init__(self, nom_dentiste, date_fin, processus, num_boite):
-        self.UniqueID = uuid.uuid4()
-        self.DateCreation = datetime.datetime.now().strftime("%Y-%m-%d")
-        self.DateFin = date_fin
-        self.NomDentiste = nom_dentiste
-        self.NumBoite = num_boite
-        self.Priorite = 0
-        self.Processus = processus
-        self.Etapes = patern_processus[processus]
+        self._UniqueID = uuid.uuid4()
+        self._DateCreation = datetime.datetime.now().strftime("%Y-%m-%d")
+        self._DateFin = date_fin
+        self._NomDentiste = nom_dentiste
+        self._NumBoite = num_boite
+        self._Priorite = 0
+        self._Processus = processus
+        self._Etapes = patern_processus[processus]
 
     # SET
     def set_DateFin(self, date_fin):
-        self.DateFin = date_fin
+        self._DateFin = date_fin
 
     def set_NomDentiste(self, nom_dentiste):
-        self.NomDentiste = nom_dentiste
+        self._NomDentiste = nom_dentiste
 
     def set_NumBoite(self, num_boite):
-        self.NumBoite = num_boite
+        self._NumBoite = num_boite
 
     def set_Processus(self, processus):
-        self.Processus = processus
-        self.Etapes = patern_processus[processus]
+        self._Processus = processus
+        self._Etapes = patern_processus[processus]
 
     def set_Priorite(self, Priorite):
-        self.Priorite = Priorite
+        self._Priorite = Priorite
 
     # GET
     def get_UniqueID(self):
-        return self.UniqueID
+        return self._UniqueID
 
     def get_DateCreation(self):
-        return self.DateCreation
+        return self._DateCreation
 
     def get_DateFin(self):
-        return self.DateFin
+        return self._DateFin
 
     def get_NomDentiste(self):
-        return self.NomDentiste
+        return self._NomDentiste
 
     def get_NumBoite(self):
-        return self.NumBoite
+        return self._NumBoite
 
     def get_Processus(self):
-        return self.Processus
+        return self._Processus
 
     def get_Priorite(self):
-        return self.Priorite
+        return self._Priorite
 
     def get_Etapes(self):
-        return self.Etapes
+        return self._Etapes
 
 class CommandeEncoder(json.JSONEncoder):
     def default(self, obj):
@@ -113,6 +113,6 @@ class CommandeEncoder(json.JSONEncoder):
         elif isinstance(obj, uuid.UUID):
             return str(obj)
         elif isinstance(obj, datetime):
-            return obj.strftime('%d-%m-%Y')
+            return obj.datetime.strftime('%d-%m-%Y')
         else:
             return json.JSONEncoder.default(self, obj)

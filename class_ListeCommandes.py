@@ -12,21 +12,23 @@ def tri_par_date(Commande):
 
 class TemplateListeCommandes:
     def __init__(self):
-        self.liste = []
+        self._liste = []
+
+    def __init__(self, liste_commandes):
+        self._liste = liste_commandes
 
     def ajouter_commande(self, commande):
-        self.liste.append(commande)
+        self._liste.append(commande)
 
     def supprimer_commande(self, commande):
-        self.liste.remove(commande)
+        self._liste.remove(commande)
 
     def trier_par_priorite(self):
         # On trie la liste des commandes en fonction de leur date de fin et de leur position dans la liste
-        self.liste = sorted(self.liste, key=tri_par_date)
+        self._liste = sorted(self.liste, key=tri_par_date)
 
     def get_liste_commandes(self):
-        return self.liste
+        return self._liste
 
     def set_liste_commandes(self, liste_commandes):
-        self.liste = liste_commandes
-
+        self._liste = liste_commandes
