@@ -40,7 +40,7 @@ class Commande:
         self.DateFin = date_fin
         self.NomDentiste = nom_dentiste
         self.NumBoite = num_boite
-        self.priority = 0
+        self.priorite = 0
         self.Processus = processus
         self.etapes = patern_processus[processus]
 
@@ -58,8 +58,8 @@ class Commande:
         self.Processus = processus
         self.etapes = patern_processus[processus]
 
-    def set_priority(self, priority):
-        self.priority = priority
+    def set_priorite(self, priorite):
+        self.priorite = priorite
 
     # GET
     def getUniqueID(self):
@@ -80,8 +80,8 @@ class Commande:
     def getProcessus(self):
         return self.Processus
 
-    def get_priority(self):
-        return self.priority
+    def get_priorite(self):
+        return self.priorite
 
     def get_etapes(self):
         return self.etapes
@@ -95,7 +95,7 @@ class CommandeEncoder(json.JSONEncoder):
                 "DateFin": obj.getDateFin(),
                 "NomDentiste": obj.getNomDentiste(),
                 "NumBoite": obj.getNumBoite(),
-                "priority": obj.get_priority(),
+                "priorite": obj.get_priorite(),
                 "Processus": obj.getProcessus(),
                 "etapes": obj.get_etapes(),
             }

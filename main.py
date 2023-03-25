@@ -99,7 +99,6 @@ def delete_commande():
 
 @app.route('/liste_commandes')
 def commandes_show():
-    ListeCommandes.trier_par_priorite()
     return render_template('commandes_show.html', commandes=ListeCommandes.liste, dependencies=dependencies)
 
 

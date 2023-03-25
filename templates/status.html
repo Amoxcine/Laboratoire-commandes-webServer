@@ -28,7 +28,7 @@
 
             {% for commande in variables.liste_commandes %}
             <tr>
-                <td>Commande {{ commande['num_boite'] }}</td>
+                <td>Commande {{ loop.index0 }}</td>
                 <td>{{ commande }}</td>
             </tr>
             {% endfor %}
