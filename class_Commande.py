@@ -40,7 +40,7 @@ class Commande:
         self.DateFin = date_fin
         self.NomDentiste = nom_dentiste
         self.NumBoite = num_boite
-        self.priorite = 0
+        self.Priorite = 0
         self.Processus = processus
         self.etapes = patern_processus[processus]
 
