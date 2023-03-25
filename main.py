@@ -87,7 +87,7 @@ def delete_commande():
             with open('commandes.json', 'w') as f:
                 json.dump(ListeCommandes.liste, f,cls=CommandeEncoder)
 
-            message = f"Commande {commande['num_boite']} supprimée avec succès"
+            message = f"Commande {commande[commande_id]} supprimée avec succès"
 
         except IndexError:
             message = "Aucune commande à supprimer"
@@ -100,7 +100,7 @@ def delete_commande():
 @app.route('/liste_commandes')
 def commandes_show():
     ListeCommandes.trier_par_priorite()
-    return render_template('gestion_commandes.html', commandes=ListeCommandes.liste, dependencies=dependencies)
+    return render_template('commandes_show.html', commandes=ListeCommandes.liste, dependencies=dependencies)
 
 
 @app.route('/status')
