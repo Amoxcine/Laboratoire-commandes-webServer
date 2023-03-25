@@ -6,22 +6,22 @@
     <table class="table">
       <thead>
         <tr>
+          <th>ID</th>
           <th>Numéro de boîte</th>
           <th>Dentiste</th>
           <th>Date de fin</th>
           <th>Processus</th>
-          <th>Priorité</th>
           <th>Action</th>
         </tr>
       </thead>
       <tbody>
         {% for commande in commandes %}
           <tr>
-            <td>{{ commande['num_boite'] }}</td>
-            <td>{{ commande['nom_dentiste'] }}</td>
-            <td>{{ commande['date_fin'] }}</td>
-            <td>{{ commande['processus'] }}</td>
-            <td>{{ commande['priorite'] }}</td>
+            <td>{{ commande.UniqueID }}</td>
+            <td>{{ commande.DateCreation }}</td>
+            <td>{{ commande.NomDentiste }}</td>
+            <td>{{ commande.DateFin }}</td>
+            <td>{{ commande.NumBoite }}</td>
             <td>
               <form action="{{ url_for('delete_commande', commande_id=loop.index0) }}" method="post">
                 <input type="hidden" name="commande_id" value="{{ loop.index0 }}">

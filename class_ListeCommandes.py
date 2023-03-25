@@ -1,9 +1,11 @@
 from class_Commande import Commande
 from datetime import datetime
 
-def tri_par_date(commande):
+
+def tri_par_date(Commande):
     # On récupère la date de fin de la commande au format YYYY-MM-DD
-    date_fin = commande.getDateFin()
+    print(Commande)
+    date_fin = Commande.get_DateFin()
     # On retourne cette date en format date pour permettre le tri
     return datetime.strptime(date_fin, '%Y-%m-%d').strftime('%d %m %Y')
 
@@ -27,3 +29,4 @@ class TemplateListeCommandes:
 
     def set_liste_commandes(self, liste_commandes):
         self.liste = liste_commandes
+

@@ -34,6 +34,17 @@ patern_processus = {
 }
 
 class Commande:
+
+    def __init__(self, UniqueID, DateCreation, DateFin, NomDentiste, NumBoite, Processus, Priorite, Etapes):
+        self.UniqueID = UniqueID
+        self.DateCreation = DateCreation
+        self.DateFin = DateFin
+        self.NomDentiste = NomDentiste
+        self.NumBoite = NumBoite
+        self.Processus = Processus
+        self.Priorite = Priorite
+        self.Etapes = Etapes
+
     def __init__(self, nom_dentiste, date_fin, processus, num_boite):
         self.UniqueID = uuid.uuid4()
         self.DateCreation = datetime.datetime.now().strftime("%Y-%m-%d")
@@ -42,62 +53,62 @@ class Commande:
         self.NumBoite = num_boite
         self.Priorite = 0
         self.Processus = processus
-        self.etapes = patern_processus[processus]
+        self.Etapes = patern_processus[processus]
 
     # SET
-    def setDateFin(self, date_fin):
+    def set_DateFin(self, date_fin):
         self.DateFin = date_fin
 
-    def setNomDentiste(self, nom_dentiste):
+    def set_NomDentiste(self, nom_dentiste):
         self.NomDentiste = nom_dentiste
 
-    def setNumBoite(self, num_boite):
+    def set_NumBoite(self, num_boite):
         self.NumBoite = num_boite
 
-    def setProcessus(self, processus):
+    def set_Processus(self, processus):
         self.Processus = processus
-        self.etapes = patern_processus[processus]
+        self.Etapes = patern_processus[processus]
 
-    def set_priorite(self, priorite):
-        self.priorite = priorite
+    def set_Priorite(self, Priorite):
+        self.Priorite = Priorite
 
     # GET
-    def getUniqueID(self):
+    def get_UniqueID(self):
         return self.UniqueID
 
-    def getDateCreation(self):
+    def get_DateCreation(self):
         return self.DateCreation
 
-    def getDateFin(self):
+    def get_DateFin(self):
         return self.DateFin
 
-    def getNomDentiste(self):
+    def get_NomDentiste(self):
         return self.NomDentiste
 
-    def getNumBoite(self):
+    def get_NumBoite(self):
         return self.NumBoite
 
-    def getProcessus(self):
+    def get_Processus(self):
         return self.Processus
 
-    def get_priorite(self):
-        return self.priorite
+    def get_Priorite(self):
+        return self.Priorite
 
-    def get_etapes(self):
-        return self.etapes
+    def get_Etapes(self):
+        return self.Etapes
 
 class CommandeEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, Commande):
             return {
-                "UniqueID": str(obj.getUniqueID()),
-                "DateCreation": obj.getDateCreation(),
-                "DateFin": obj.getDateFin(),
-                "NomDentiste": obj.getNomDentiste(),
-                "NumBoite": obj.getNumBoite(),
-                "priorite": obj.get_priorite(),
-                "Processus": obj.getProcessus(),
-                "etapes": obj.get_etapes(),
+                "UniqueID": str(obj.get_UniqueID()),
+                "DateCreation": obj.get_DateCreation(),
+                "DateFin": obj.get_DateFin(),
+                "NomDentiste": obj.get_NomDentiste(),
+                "NumBoite": obj.get_NumBoite(),
+                "priorite": obj.get_Priorite(),
+                "Processus": obj.get_Processus(),
+                "Etapes": obj.get_Etapes(),
             }
         elif isinstance(obj, uuid.UUID):
             return str(obj)

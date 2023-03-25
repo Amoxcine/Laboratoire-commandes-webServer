@@ -41,13 +41,17 @@ ListeCommandes = TemplateListeCommandes()
 
 try:
     with open("commandes.json", "r") as f:
-        ListeCommandes.liste = json.load(f)
+        json_data = json.load(f)
+        ListeCommandes = TemplateListeCommandes()
+        for data in json_data:
+            commande = Commande(data["UniqueID"], data["DateCreation"], data["DateFin"], data["NomDentiste"], data["NumBoite"], data["Processus"], data["Priorite"], data["Etapes"])
+            ListeCommandes.ajouter_commande(commande)
 except FileNotFoundError:
     with open("commandes.json", "w") as f:
-        ListeCommandes.liste = []
-        json.dump(ListeCommandes.liste, f)
+        ListeCommandes = TemplateListeCommandes()
+        json.dump(ListeCommandes.liste, f, cls=CommandeEncoder)
 except json.decoder.JSONDecodeError:
-    ListeCommandes.liste = []
+    ListeCommandes = TemplateListeCommandes()
 
 
 @app.route('/')
@@ -56,7 +60,7 @@ def accueil():
 
 
 @app.route('/ajouter_commande', methods=['GET', 'POST'])
-def ajouter_commande(liste_commandes=ListeCommandes.liste):
+def ajouter_commande():
     if request.method == 'POST':
         nom_dentiste = request.form['nom_dentiste']
         date_fin = request.form['date_fin']
@@ -100,7 +104,7 @@ def delete_commande():
 @app.route('/liste_commandes')
 def commandes_show():
     ListeCommandes.trier_par_priorite()
-    return render_template('commandes_show.html', commandes=ListeCommandes.liste, dependencies=dependencies)
+    return render_template('gestion_commandes.html', commandes=ListeCommandes.liste, dependencies=dependencies)
 
 
 @app.route('/status')
