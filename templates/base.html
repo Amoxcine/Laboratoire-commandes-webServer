@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="/">Accueil</a></li>
+            <li><a href="/ajouter_commande">Ajouter une commande</a></li>
+            <li><a href="/liste_commandes">Liste des commandes</a></li>
+            <li><a href="/delete_commande">Supprimer une commande</a></li>
+            <li><a href="/status">Etat de l'application</a></li>
+        </ul>
+    </nav>
+    {% block content %}{% endblock %}
+    {% block scripts %}{% endblock %}
+</body>
+</html>

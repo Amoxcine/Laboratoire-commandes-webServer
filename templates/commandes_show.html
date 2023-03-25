@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Liste des commandes</h1>
+<table>
+    <tr>
+        <th>Nom du dentiste</th>
+        <th>Date de fin</th>
+        <th>Processus</th>
+        <th>Numéro de boîte</th>
+        <th>Action</th>
+    </tr>
+    {% for commande in commandes %}
+    <tr>
+        <td>{{ commande['nom_dentiste'] }}</td>
+        <td>{{ commande['date_fin'] }}</td>
+        <td>{{ commande['processus'] }}</td>
+        <td>{{ commande['num_boite'] }}</td>
+        <td>
+            {% for etape in dependencies[commande['processus']] %}
+            {% set status_class = 'disabled' %}
+            {% if dependencies[commande['processus']][etape] is none or dependencies[commande['processus']][etape] == [] %}
+            {% set status_class = 'not-started' %}
+            {% else %}
+            {% for dependency in dependencies[commande['processus']][etape] %}
+            {% endfor %}
+            {% endif %}
+            <button type="button" id='bouton_statut' class="{{ status_class }}" data-commande="{{ etape }}">{{ etape }}</button>
+            {% endfor %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    const actionButtons = document.querySelectorAll('#bouton_statut');
+
+    actionButtons.forEach(button => {button.addEventListener('click', () => {
+    // Vérifie si le bouton est "disabled"
+    if (button.classList.contains('disabled')) {
+        return;
+    }
+
+
+    const new_status = button.dataset.etape;
+    const commande_id = button.dataset.commande;
+
+
+    // Change la classe du bouton pour indiquer que l'étape est en cours
+    if (button.classList.contains('not-started')) {
+        button.classList.remove('not-started');
+        button.classList.add('in-progress');
+
+
+    } else if (button.classList.contains('in-progress')) {
+        button.classList.remove('in-progress');
+        button.classList.add('done');
+    } else if (button.classList.contains('done')) {
+        button.classList.remove('done');
+        button.classList.add('not-started');
+    }
+    })});
+</script>
+{% endblock %}

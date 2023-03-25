@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Ajouter une commande{% endblock %}
+
+{% block content %}
+<h1>Ajouter une commande</h1>
+{% if message %}
+<p>{{ message }}</p>
+{% endif %}
+<form method="POST" action="{{ url_for('ajouter_commande') }}">
+    <label for="nom_dentiste">Nom du dentiste :</label>
+    <input type="text" name="nom_dentiste" id="nom_dentiste" required><br><br>
+
+    <label for="date_fin">Date de fin :</label>
+    <input type="date" name="date_fin" id="date_fin" required><br><br>
+
+    <label for="nom_dentiste">Numéro de la boîte :</label>
+    <input type="text" name="num_boite" id="num_boite" required><br><br>
+
+    <!-- Choix du processus -->
+    <label for="processus">Processus :</label>
+    <select name="processus" id="processus" required>
+        <option value="1">Processus 1</option>
+        <option value="2">Processus 2</option>
+        <option value="3">Processus 3</option>
+    </select><br><br>
+
+    <input type="submit" value="Ajouter la commande">
+</form>
+{% endblock %}
