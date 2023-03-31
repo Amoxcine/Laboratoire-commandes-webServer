@@ -6,37 +6,6 @@ from class_ListeCommandes import TemplateListeCommandes
 
 app = Flask(__name__)
 
-dependencies = {
-    "1": {
-        "reception_empreinte": None,
-        "scan_commande": ["reception_empreinte"],
-        "fichier_envoye": ["scan_commande"],
-        "modele_receptionne": ["fichier_envoye"],
-        "modele_controle": ["modele_receptionne"],
-        "modele_briallance": ["modele_controle"],
-    },
-    "2": {
-        "couler_moule": None,
-        "moule_sechage": ["couler_moule"],
-        "moule_controle": ["moule_sechage"],
-        "inlay_core": ["moule_controle"],
-        "shape": ["inlay_core"],
-        "ceramique": ["shape"],
-    },
-    "3": {
-        "reception_empreinte": None,
-        "modele": ["reception_empreinte"],
-        "moule_sechage": ["modele"],
-        "moule_controle": ["moule_sechage"],
-        "trace_contours": ["moule_controle"],
-        "cire": ["trace_contours"],
-        "clef": ["cire"],
-        "resine": ["clef"],
-        "bain": ["resine"],
-        "gratter_polir": ["bain"],
-    }
-}
-
 ListeCommandes = TemplateListeCommandes()
 
 try:
