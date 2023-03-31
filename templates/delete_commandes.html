@@ -17,11 +17,11 @@
       <tbody>
         {% for commande in commandes %}
           <tr>
-            <td>{{ commande.get_UniqueID }}</td>
-            <td>{{ commande.get_NumBoite }}</td>
-            <td>{{ commande.get_NomDentiste }}</td>
-            <td>{{ commande.get_DateFin }}</td>
-            <td>{{ commande.get_Processus }}</td>
+            <td>{{ commande.get_UniqueID() }}</td>
+            <td>{{ commande.get_NumBoite() }}</td>
+            <td>{{ commande.get_NomDentiste() }}</td>
+            <td>{{ commande.get_DateFin() }}</td>
+            <td>{{ commande.get_Processus() }}</td>
             <td>
               <form action="{{ url_for('delete_commande', commande_id=loop.index0) }}" method="post">
                 <input type="hidden" name="commande_id" value="{{ loop.index0 }}">

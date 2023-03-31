@@ -44,12 +44,12 @@ try:
         json_data = json.load(f)
         ListeCommandes = TemplateListeCommandes()
         for data in json_data:
-            commande = Commande(data["UniqueID"], data["DateCreation"], data["DateFin"], data["NomDentiste"], data["NumBoite"], data["Processus"], data["Priorite"], data["Etapes"])
+            commande = Commande(data["UniqueID"], data["DateCreation"], data["DateFin"], data["NomDentiste"], data["NumBoite"], data["Processus"], data["priorite"], data["Etapes"])
             ListeCommandes.ajouter_commande(commande)
 except FileNotFoundError:
     with open("commandes.json", "w") as f:
         ListeCommandes = TemplateListeCommandes()
-        json.dump(ListeCommandes.liste, f, cls=CommandeEncoder)
+        json.dump(ListeCommandes.get_liste_commandes(), f, cls=CommandeEncoder)
 except json.decoder.JSONDecodeError:
     ListeCommandes = TemplateListeCommandes()
 
@@ -67,11 +67,11 @@ def ajouter_commande():
         processus = request.form['processus']
         num_boite = request.form['num_boite']
 
-        ListeCommandes.liste.append(Commande(nom_dentiste, date_fin, processus, num_boite))
+        ListeCommandes.ajouter_commande(Commande(nom_dentiste, date_fin, processus, num_boite))
         ListeCommandes.trier_par_priorite()
 
         with open("commandes.json", "w") as f:
-            json.dump(ListeCommandes.liste, f,cls=CommandeEncoder)
+            json.dump(ListeCommandes.get_liste_commandes(), f,cls=CommandeEncoder)
 
         # Affichage d'un message de confirmation
         message = "Commande ajoutée avec succès"
@@ -87,9 +87,9 @@ def delete_commande():
         commande_id = request.form['commande_id']
 
         try:
-            commande = ListeCommandes.liste.pop(int(commande_id))
+            commande = ListeCommandes.supprimer_commande(int(commande_id))
             with open('commandes.json', 'w') as f:
-                json.dump(ListeCommandes.liste, f,cls=CommandeEncoder)
+                json.dump(ListeCommandes.get_liste_commandes(), f,cls=CommandeEncoder)
 
             message = f"Commande {commande[commande_id]} supprimée avec succès"
 
@@ -98,20 +98,20 @@ def delete_commande():
         return redirect(url_for('delete_commande', message=message), code=303)
     else:
         message = request.args.get('message', '')
-        return render_template('delete_commandes.html', commandes=ListeCommandes.liste, message=message)
+        return render_template('delete_commandes.html', commandes=ListeCommandes.get_liste_commandes(), message=message)
 
 
 @app.route('/liste_commandes')
 def commandes_show():
     ListeCommandes.trier_par_priorite()
-    return render_template('gestion_commandes.html', commandes=ListeCommandes.liste, dependencies=dependencies)
+    return render_template('gestion_commandes.html', commandes=ListeCommandes.toJson(), dependencies=dependencies)
 
 
 @app.route('/status')
 def statut_variables():
     variables = {}
     variables['config'] = {'debug': app.debug}
-    variables['liste'] = dict(ListeCommandes.liste)
+    variables['liste'] = ListeCommandes.toJson()
     variables['dependencies'] = dependencies
     return render_template('status.html', variables=variables)
 
@@ -119,13 +119,14 @@ def statut_variables():
 # Crée une fonction qui peut recevoir les des requêtes POST et qui les modifies dans la liste de commandes
 @app.route('/update_commande', methods=['POST'])
 def update_commande():
+    """Reçoit une requête POST et modifie la commande correspondante"""
     commande_id = request.form['commande_id']
     etat = request.form['etat']
 
-    ListeCommandes.liste[int(commande_id)][etat] = True
+
 
     with open('commandes.json', 'w') as f:
-        json.dump(ListeCommandes.liste, f,cls=CommandeEncoder)
+        json.dump(ListeCommandes.get_liste_commandes(), f,cls=CommandeEncoder)
 
     return JsonResponse({'status': 'ok'})
 

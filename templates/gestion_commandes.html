@@ -12,20 +12,20 @@
     </tr>
     {% for commande in commandes %}
     <tr>
-        <td>{{ commande['nom_dentiste'] }}</td>
-        <td>{{ commande['date_fin'] }}</td>
-        <td>{{ commande['processus'] }}</td>
-        <td>{{ commande['num_boite'] }}</td>
+        <td>{{ commande['NomDentiste'] }}</td>
+        <td>{{ commande['DateFin'] }}</td>
+        <td>{{ commande['Processus'] }}</td>
+        <td>{{ commande['NumBoite'] }}</td>
         <td>
-            {% for etape in dependencies[commande['processus']] %}
-            {% set status_class = 'disabled' %}
-            {% if dependencies[commande['processus']][etape] is none or dependencies[commande['processus']][etape] == [] %}
-            {% set status_class = 'not-started' %}
-            {% else %}
-            {% for dependency in dependencies[commande['processus']][etape] %}
-            {% endfor %}
-            {% endif %}
-            <button type="button" id='bouton_statut' class="{{ status_class }}" data-commande="{{ etape }}">{{ etape }}</button>
+            {% for etape in dependencies[commande['Processus']] %}
+                {% set status_class = 'disabled' %}
+                {% if dependencies[commande['Processus']][etape] is none or dependencies[commande['Processus']][etape] == [] %}
+                    {% set status_class = 'not-started' %}
+                {% else %}
+                    {% for dependency in dependencies[commande['Processus']][etape] %}
+                    {% endfor %}
+                {% endif %}
+                <button type="button" id='bouton_statut' class="{{ status_class }}" data-commande="{{ etape }}">{{ etape }}</button>
             {% endfor %}
         </td>
     </tr>

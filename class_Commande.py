@@ -36,24 +36,26 @@ patern_processus = {
 class Commande:
 
     def __init__(self, UniqueID, DateCreation, DateFin, NomDentiste, NumBoite, Processus, Priorite, Etapes):
-        self._UniqueID = UniqueID
-        self._DateCreation = DateCreation
+        if UniqueID == "":
+            self._UniqueID = uuid.uuid4()
+        else:
+            self._UniqueID = UniqueID
+        if DateCreation == "":
+            self._DateCreation = datetime.datetime.now().strftime("%Y-%m-%d")
+        else:
+            self._DateCreation = DateCreation
         self._DateFin = DateFin
         self._NomDentiste = NomDentiste
         self._NumBoite = NumBoite
         self._Processus = Processus
-        self._Priorite = Priorite
-        self._Etapes = Etapes
-
-    def __init__(self, nom_dentiste, date_fin, processus, num_boite):
-        self._UniqueID = uuid.uuid4()
-        self._DateCreation = datetime.datetime.now().strftime("%Y-%m-%d")
-        self._DateFin = date_fin
-        self._NomDentiste = nom_dentiste
-        self._NumBoite = num_boite
-        self._Priorite = 0
-        self._Processus = processus
-        self._Etapes = patern_processus[processus]
+        if Priorite == "":
+            self._Priorite = 0
+        else:
+            self._Priorite = Priorite
+        if Etapes is {}:
+            self._Etapes = patern_processus[Processus]
+        else:
+            self._Etapes = Etapes
 
     # SET
     def set_DateFin(self, date_fin):
@@ -96,6 +98,18 @@ class Commande:
 
     def get_Etapes(self):
         return self._Etapes
+
+    def toJson(self):
+        return {
+            "UniqueID": self._UniqueID,
+            "DateCreation": self._DateCreation,
+            "DateFin": self._DateFin,
+            "NomDentiste": self._NomDentiste,
+            "NumBoite": self._NumBoite,
+            "priorite": self._Priorite,
+            "Processus": self._Processus,
+            "Etapes": self._Etapes,
+            }
 
 class CommandeEncoder(json.JSONEncoder):
     def default(self, obj):
